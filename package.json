@@ -1,5 +1,5 @@
 {
-  "name": "react-native-code-grid-input",
+  "name": "react-native-svcode-input",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -25,7 +25,7 @@
     "react-native": "^0.63.2",
     "typescript": "^3.9.7"
   },
-  "files":[
+  "files": [
     "dist"
   ]
 }

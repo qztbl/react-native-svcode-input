@@ -1,4 +1,4 @@
-package com.example;
+package com.example.svcode;
 
 import com.facebook.react.ReactActivity;
 
