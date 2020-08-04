@@ -5,13 +5,15 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
+    "updateLib": "yarn upgrade react-native-svcode-input",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint ."
   },
   "dependencies": {
     "react": "16.13.1",
-    "react-native": "0.63.2"
+    "react-native": "0.63.2",
+    "react-native-svcode-input": "../dist/"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",

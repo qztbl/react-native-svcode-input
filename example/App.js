@@ -14,6 +14,7 @@ import {
   View,
   Text,
   StatusBar,
+  TextInput,
 } from 'react-native';
 
 import {
@@ -24,7 +25,9 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-const App: () => React$Node = () => {
+import {CodeInput} from 'react-native-svcode-input';
+
+const App = () => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -40,6 +43,7 @@ const App: () => React$Node = () => {
           )}
           <View style={styles.body}>
             <View style={styles.sectionContainer}>
+              <CodeInput style={{backgroundColor:'red'}}/>
               <Text style={styles.sectionTitle}>Step One</Text>
               <Text style={styles.sectionDescription}>
                 Edit <Text style={styles.highlight}>App.js</Text> to change this

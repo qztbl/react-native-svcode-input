@@ -1,76 +1,81 @@
 import * as React from 'react';
-import { StyleProp, StyleSheet, TextInput, View, ViewStyle, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { StyleProp, StyleSheet, TextInput, View, ViewStyle, TouchableWithoutFeedback, Keyboard, TextStyle } from 'react-native';
 
-interface CodeIputProps {
+interface Props {
   style?: StyleProp<ViewStyle>
+  length?: number
+  normalGrid?: StyleProp<TextStyle>
+  careGrid?: StyleProp<ViewStyle>
   autoFocus?: boolean
   onChangeText?: (str: string) => void
 }
 
-let inputRef = React.createRef<TextInput>()
+interface State {
+  code: string
+  focus: boolean
+}
 
-const CodeIput = (props: CodeIputProps) => {
+export default class CodeIput extends React.Component<Props, State>{
 
-  const [code, setCode] = React.useState('')
-  const [focus, setFocus] = React.useState(false)
+  constructor(props: Props) {
+    super(props)
+    this.state = {
+      code: '',
+      focus: false,
+    }
+  }
 
-  return (
-    <View style={[props.style, styles.container]}>
-      <TextInput style={[styles.grid, focus || isNotEmpty(code[0]) ? styles.careGrid : null]}
-        editable={false} maxLength={1} allowFontScaling={false} value={code[0]} />
-
-      <TextInput style={[styles.grid, isNotEmpty(code[0]) ? styles.careGrid : null]}
-        editable={false} maxLength={1} allowFontScaling={false} value={code[1]} />
-
-      <TextInput style={[styles.grid, isNotEmpty(code[1]) ? styles.careGrid : null]}
-        editable={false} maxLength={1} allowFontScaling={false} value={code[2]} />
-
-      <TextInput style={[styles.grid, isNotEmpty(code[2]) ? styles.careGrid : null]}
-        editable={false} maxLength={1} allowFontScaling={false} value={code[3]} />
-
-      <TextInput style={[styles.grid, isNotEmpty(code[3]) ? styles.careGrid : null]}
-        editable={false} maxLength={1} allowFontScaling={false} value={code[4]} />
-
-      <TextInput style={[styles.grid, isNotEmpty(code[4]) ? styles.careGrid : null]}
-        editable={false} maxLength={1} allowFontScaling={false} value={code[5]} />
-
-      <TextInput style={{
-        position: 'absolute', fontSize: 0, color: 'transparent', backgroundColor: 'transparent',
-        top: 0, left: 0, right: 0, bottom: 0
-      }}
-        caretHidden={true} maxLength={6} keyboardType='number-pad' contextMenuHidden={true}
-        value={code}
-        ref={inputRef}
-        autoFocus={props.autoFocus}
-        onFocus={(e) => {
-          setFocus(true)
-        }} onBlur={() => {
-          setFocus(false)
-        }} onChangeText={(s) => {
-          let str = s.replace(/[^0-9]/g, '')
-          setCode(str)
-          props.onChangeText && props.onChangeText(str)
-        }} />
-    </View>
-  );
-};
-
-export default CodeIput;
-
-function isNotEmpty(str?: string | null) {
-  return str && str !== null && str.length > 0
+  render() {
+    const code = this.state.code
+    const focus = this.state.focus
+    const length = this.props.length !== undefined ? this.props.length : 6
+    const grids = Array(length)
+    for (let i = 0; i < length; i++) {
+      grids[i] = <TextInput
+        key={i}
+        style={[styles.grid, this.props.normalGrid,
+        i < code.length || (i == code.length && focus) ? [styles.careGrid, this.props.careGrid] : null]}
+        editable={false}
+        maxLength={1}
+        allowFontScaling={false}
+        value={code[i]} />
+    }
+    return (
+      <View style={[styles.container, this.props.style]}>
+        {grids}
+        <TextInput
+          style={styles.realInput}
+          caretHidden={true}
+          maxLength={length}
+          keyboardType='number-pad'
+          contextMenuHidden={true}
+          value={code}
+          autoFocus={this.props.autoFocus}
+          onFocus={(e) => {
+            this.setState({ focus: true })
+          }} onBlur={() => {
+            this.setState({ focus: false })
+          }} onChangeText={(s) => {
+            let str = s.replace(/[^0-9]/g, '')
+            this.setState({ code: str })
+            this.props.onChangeText && this.props.onChangeText(str)
+          }} />
+      </View>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    overflow: 'hidden'
   },
   grid: {
-    width: 44,
-    height: 52,
+    width: 50,
+    height: 50,
     fontSize: 22,
-    color: '#303133',
+    color: '#000000',
     borderColor: '#DCDFE6',
     borderRadius: 5,
     borderWidth: 1,
@@ -78,6 +83,16 @@ const styles = StyleSheet.create({
     flexShrink: 1,
   },
   careGrid: {
-    borderColor: '#303133'
+    borderColor: '#000000'
+  },
+  realInput: {
+    position: 'absolute',
+    fontSize: 0,
+    color: 'transparent',
+    backgroundColor: 'transparent',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0
   }
 });
