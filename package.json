@@ -9,7 +9,10 @@
     "build": "tsc"
   },
   "keywords": [
-    "react-native"
+    "react-native",
+    "SMS verification code",
+    "grid",
+    "InputText"
   ],
   "author": "qztbl",
   "license": "MIT",

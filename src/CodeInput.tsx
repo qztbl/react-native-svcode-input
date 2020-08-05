@@ -4,8 +4,8 @@ import { StyleProp, StyleSheet, TextInput, View, ViewStyle, TouchableWithoutFeed
 interface Props {
   style?: StyleProp<ViewStyle>
   length?: number
-  normalGrid?: StyleProp<TextStyle>
-  careGrid?: StyleProp<ViewStyle>
+  normalGridStyle?: StyleProp<TextStyle>
+  careGridStyle?: StyleProp<ViewStyle>
   autoFocus?: boolean
   onChangeText?: (str: string) => void
 }
@@ -33,8 +33,8 @@ export default class CodeIput extends React.Component<Props, State>{
     for (let i = 0; i < length; i++) {
       grids[i] = <TextInput
         key={i}
-        style={[styles.grid, this.props.normalGrid,
-        i < code.length || (i == code.length && focus) ? [styles.careGrid, this.props.careGrid] : null]}
+        style={[styles.grid, this.props.normalGridStyle,
+        i < code.length || (i == code.length && focus) ? [styles.careGrid, this.props.careGridStyle] : null]}
         editable={false}
         maxLength={1}
         allowFontScaling={false}
