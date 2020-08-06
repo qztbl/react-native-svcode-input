@@ -16,10 +16,6 @@
   ],
   "author": "qztbl",
   "license": "MIT",
-  "peerDependencies": {
-    "react": "*",
-    "react-native": "*"
-  },
   "repository": "git@github.com:qztbl/react-native-svcode-input.git",
   "homepage": "https://github.com/qztbl/react-native-svcode-input#readme",
   "devDependencies": {
